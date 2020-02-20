@@ -80,15 +80,30 @@
 											type="password" name="password" id="password"
 											class="form-control" placeholder="password"
 											th:field="*{password}" th:errorclass="error-input"
-											value="xxxxxxxx">
+											th:value="password">
 									</div>
 								</div>
 							</div>
+								<!-- 確認用パスワード -->
+							<div class="form-group">
+								<div class="row">
+									<div class="col-sm-12">
+										<label for="passwaord"> 確認用パスワード: </label> <label
+											th:if="${#fields.hasErrors('checkPassword')}"
+											th:errors="*{checkPassword}" class="error_messages"
+											style="color: red"> パスワードを入力してください </label> <input
+											type="password" name="password" id="checkPassword"
+											class="form-control" placeholder="password"
+											th:field="*{checkPassword}" th:errorclass="error-input"
+											th:value="checkPassword">
+									</div>
+								</div>
+								</div>								
 							<!-- 登録ボタン -->
 							<div class="form-group">
 								<div class="row">
 									<div class="col-sm-12">
-										<button type="submit" class="btn btn-primary">登録</button>
+										<button type="submit" class="btn btn-primary" id="btn">登録</button>
 									</div>
 								</div>
 							</div>

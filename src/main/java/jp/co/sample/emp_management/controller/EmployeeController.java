@@ -26,7 +26,7 @@ public class EmployeeController {
 
 	@Autowired
 	private EmployeeService employeeService;
-	
+
 	/**
 	 * 使用するフォームオブジェクトをリクエストスコープに格納する.
 	 * 
@@ -53,14 +53,32 @@ public class EmployeeController {
 		return "employee/list";
 	}
 
-	
+	/**
+	 * 従業員検索フォームから名前の曖昧検索を行って一覧を表示します.
+	 * 
+	 * @param name  入力された値
+	 * @param model リクエストスコープ
+	 * @return 一件も該当しない場合は全件を表示
+	 * @return 該当する従業員の一覧
+	 */
+	@RequestMapping("/search")
+	public String findByLikeName(String name, Model model) {
+		List<Employee> employeeList = employeeService.findByLikeName(name);
+		model.addAttribute("employeeList", employeeList);
+		if (employeeList.size() == 0) {
+			model.addAttribute("searchEmployee", employeeList);
+			return showList(model);
+		}
+		return "employee/list";
+	}
+
 	/////////////////////////////////////////////////////
 	// ユースケース：従業員詳細を表示する
 	/////////////////////////////////////////////////////
 	/**
 	 * 従業員詳細画面を出力します.
 	 * 
-	 * @param id リクエストパラメータで送られてくる従業員ID
+	 * @param id    リクエストパラメータで送られてくる従業員ID
 	 * @param model モデル
 	 * @return 従業員詳細画面
 	 */
@@ -70,20 +88,19 @@ public class EmployeeController {
 		model.addAttribute("employee", employee);
 		return "employee/detail";
 	}
-	
+
 	/////////////////////////////////////////////////////
 	// ユースケース：従業員詳細を更新する
 	/////////////////////////////////////////////////////
 	/**
 	 * 従業員詳細(ここでは扶養人数のみ)を更新します.
 	 * 
-	 * @param form
-	 *            従業員情報用フォーム
+	 * @param form 従業員情報用フォーム
 	 * @return 従業員一覧画面へリダクレクト
 	 */
 	@RequestMapping("/update")
 	public String update(@Validated UpdateEmployeeForm form, BindingResult result, Model model) {
-		if(result.hasErrors()) {
+		if (result.hasErrors()) {
 			return showDetail(form.getId(), model);
 		}
 		Employee employee = new Employee();

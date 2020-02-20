@@ -8,6 +8,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.ModelAndView;
 
+/**
+ * システム内で処理されなかった例外を処理して500エラーページを表示するクラスです.
+ * @author rinashioda
+ *
+ */
 public class GlobalExceptionHandler implements HandlerExceptionResolver {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(GlobalExceptionHandler.class);

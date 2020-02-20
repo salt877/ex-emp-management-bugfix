@@ -67,14 +67,13 @@ public class AdministratorController {
 	 * 
 	 * @param form   管理者情報用フォーム
 	 * @param result エラー情報格納用オブジェクト
-	 * @return 未入力の項目があった場合は管理者登録画面を表示
-	 * 管理者登録に成功した場合はログイン画面へリダイレクト
-	 * パスワードと確認用パスワードが一致していない場合は管理者登録画面を表示.
+	 * @return 未入力の項目があった場合は管理者登録画面を表示 管理者登録に成功した場合はログイン画面へリダイレクト
+	 *         パスワードと確認用パスワードが一致していない場合は管理者登録画面を表示.
 	 * 
 	 */
 	@RequestMapping("/insert")
 	public String insert(@Validated InsertAdministratorForm form, BindingResult result, Model model) {
-		
+
 		if (result.hasErrors()) {
 			return toInsert();
 		} else if (form.getPassword().equals(form.getCheckPassword())) {
